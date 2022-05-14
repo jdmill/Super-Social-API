@@ -24,10 +24,19 @@ const userSchema = new Schema(
   },
   {
     toJSON: {
+      virtuals: true,
       getters: true,
     },
   }
 );
+
+//Virtual property 'friendCount' : returns total friend count
+
+userSchema.Schema.virtual("friendCount")
+  //getter
+  .get(function () {
+    return `${this.friends.length}`;
+  });
 
 const User = model("user", userSchema);
 module.exports = User;
