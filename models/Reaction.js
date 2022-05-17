@@ -28,4 +28,10 @@ const reactionSchema = new Schema(
   }
 );
 
-module.exports = Reaction;
+reactionSchema.method("getDate", function () {
+  const date = new Date(this.createdAt);
+  const formattedDate = `${date.getMonth()} ${date.getDay()}, ${date.getFullYear()}`;
+  return formattedDate;
+});
+
+module.exports = reactionSchema;

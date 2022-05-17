@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const reactionSchema = require("./Reaction");
+const Reaction = require("./Reaction");
 
 const thoughtSchema = new Schema(
   {
@@ -17,7 +17,7 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
     },
-    reactions: [reactionSchema],
+    reactions: [Reaction],
   },
   {
     toJSON: {
@@ -27,8 +27,15 @@ const thoughtSchema = new Schema(
   }
 );
 
+//virtual returns formatted date
+thoughtSchema.method("getDate", function () {
+  const date = new Date(this.createdAt);
+  const formattedDate = `${date.getMonth()} ${date.getDay()}, ${date.getFullYear()}`;
+  return formattedDate;
+});
 //virtual property reactionCount: returns number of reactions
-thoughtSchema.Schema.virtual("reactionCount")
+thoughtSchema
+  .virtual("reactionCount")
   //getter
   .get(function () {
     return `${this.reactions.length}`;
