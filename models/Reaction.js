@@ -28,9 +28,9 @@ const reactionSchema = new Schema(
   }
 );
 
-reactionSchema.method("getDate", function () {
+reactionSchema.virtual("getDate").get(function () {
   const date = new Date(this.createdAt);
-  const formattedDate = `${date.getMonth()} ${date.getDay()}, ${date.getFullYear()}`;
+  const formattedDate = `${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`;
   return formattedDate;
 });
 
