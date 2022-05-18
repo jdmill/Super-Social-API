@@ -91,13 +91,13 @@ const addFriend = async (req, res) => {
 
 const deleteFriend = async (req, res) => {
   try {
-    await User.findOneAndDelete(
+    await User.findOneAndUpdate(
       {
         _id: req.params.userId,
       },
       { $pull: { friends: req.params.friendId } }
     );
-    await User.findOneAndDelete(
+    await User.findOneAndUpdate(
       {
         _id: req.params.friendId,
       },
